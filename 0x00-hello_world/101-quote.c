@@ -11,7 +11,8 @@
 int main(void)
 {
 	int fd;
-	const char *quote = "and that piece of art is useful\" - Dora Korpar, 2015-10-19\n";
+	const char *quote = "and that piece of art is useful\" - Dora Korpar, "
+			    "2015-10-19\n";
 
 	fd = open("/dev/stderr", O_WRONLY);
 	write(fd, quote, strlen(quote));
