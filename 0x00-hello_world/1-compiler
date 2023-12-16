@@ -1,8 +1,2 @@
 #!/bin/bash
-
-if [ -z "$CFILE" ]; then
-    echo "No C file specified."
-    exit 1
-fi
-
-gcc -c "$CFILE"
+[ -z "$CFILE" ] && { echo "No C file specified."; exit 1; }; gcc -E "$CFILE" > c
