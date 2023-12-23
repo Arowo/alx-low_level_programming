@@ -28,4 +28,6 @@ void print_square(int size);
 int _putchar(char c);
 void print_triangle(int size);
 
+unsigned long largest_prime_factor(unsigned long n);
+
 #endif /* MAIN_H */
