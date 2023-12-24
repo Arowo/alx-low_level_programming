@@ -16,4 +16,7 @@ int _putchar(char c);
 int print_sign(int n);
 int _putchar(char c);
 
+int _abs(int n);
+int _putchar(char c);
+
 #endif /* MAIN_H */
