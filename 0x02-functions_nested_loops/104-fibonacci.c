@@ -1,31 +1,17 @@
 #include <stdio.h>
 
-/**
- * main - Entry point
- *
- * Return: Always 0
- */
-int main(void)
-{
-    int count, limit;
-    unsigned long int num1, num2, next;
+int main() {
+	int n = 100;
+	int i, t1 = 0, t2 = 1, nextTerm;
 
-    count = 0;
-    limit = 98;
-    num1 = 1;
-    num2 = 2;
+	printf("Fibonacci Series: ");
 
-    printf("%lu, %lu", num1, num2);
+	for (i = 1; i <= n; ++i) {
+		printf("%d, ", t1);
+		nextTerm = t1 + t2;
+		t1 = t2;
+		t2 = nextTerm;
+	}
 
-    for (count = 2; count < limit; count++)
-    {
-        next = num1 + num2;
-        printf(", %lu", next);
-        num1 = num2;
-        num2 = next;
-    }
-
-    printf("\n");
-
-    return (0);
+	return 0;
 }
