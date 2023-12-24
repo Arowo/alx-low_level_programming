@@ -28,4 +28,8 @@ int _putchar(char c);
 void times_table(void);
 int _putchar(char c);
 
+int add(int a, int b);
+void times_table(void);
+int _putchar(char c);
+
 #endif /* MAIN_H */
