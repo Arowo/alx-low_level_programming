@@ -7,25 +7,25 @@
  */
 int main(void)
 {
-    int count, limit;
-    long int num1, num2, next;
+	int count, limit;
+	long int num1, num2, next;
 
-    count = 0;
-    limit = 50;
-    num1 = 1;
-    num2 = 2;
+	count = 0;
+	limit = 50;
+	num1 = 1;
+	num2 = 2;
 
-    printf("%ld, %ld", num1, num2);
+	printf("%ld, %ld", num1, num2);
 
-    for (count = 2; count < limit; count++)
-    {
-        next = num1 + num2;
-        printf(", %ld", next);
-        num1 = num2;
-        num2 = next;
-    }
+	for (count = 2; count < limit; count++)
+	{
+		next = num1 + num2;
+		printf(", %ld", next);
+		num1 = num2;
+		num2 = next;
+	}
 
-    printf("\n");
+	printf("\n");
 
-    return (0);
+	return (0);
 }
