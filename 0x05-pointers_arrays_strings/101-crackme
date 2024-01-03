@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <string.h>
+
+/**
+ * main - Checks if the provided password is valid.
+ *
+ * @argc: Number of arguments passed to the program.
+ * @argv: Array of arguments passed to the program.
+ *
+ * Return: 0 if the password is valid, 1 otherwise.
+ */
+int main(int argc, char *argv[])
+{
+    if (argc != 2)
+    {
+        fprintf(stderr, "Usage: %s [password]\n", argv[0]);
+        return 1;
+    }
+
+    char *password = argv[1];
+    // Your logic to validate the password goes here
+    // Example: Check the length or specific characters in the password
+
+    // For demonstration, let's check if the password contains at least 8 characters
+    if (strlen(password) >= 8)
+    {
+        printf("Tada! Congrats\n");
+        return 0; // Password is valid
+    }
+    else
+    {
+        printf("Invalid password\n");
+        return 1; // Password is not valid
+    }
+}
