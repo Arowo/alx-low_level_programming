@@ -10,21 +10,22 @@
 int main(void)
 {
     int sum = 0;
-    char password[7];
+    char password[15];
     int i, r;
 
     srand(time(0));
 
-    for (i = 0; i < 6; i++)
+    for (i = 0; i < 10; i++)
     {
-        r = rand() % 10;
-        password[i] = '0' + r;
+        r = rand() % 94 + 33;
+        password[i] = r;
         sum += r;
     }
 
-    password[i] = '0' + (10 - sum % 10);
+    password[i++] = (sum % 94) + 33;
+    password[i] = '\0';
 
-    printf("%s", password);
+    printf("%s\n", password);
 
     return 0;
 }
