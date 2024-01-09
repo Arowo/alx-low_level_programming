@@ -2,11 +2,20 @@
 #include <string.h>
 
 /**
- * set_string - sets the value of a pointer to a char.
- * @s: s
- * @to: to
+ * _strchr - locates a character in a string
+ * @s: string
+ * @c: character
+ * Return: return pointer to the first character in the string
  */
-void set_string(char **s, char *to)
+char *_strchr(char *s, char c)
 {
-	*s = to;
+	while (*s != '\0')
+	{
+		if (*s == c)
+			return (s);
+		s++;
+	}
+	if (*s == c)
+		return (s);
+	return (NULL);
 }
