@@ -12,4 +12,8 @@ int *array_range(int min, int max);
 
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
+int _isdigit(char c);
+void print_error(void);
+void multiply(const char *num1, const char *num2);
+
 #endif /* MAIN_H */
