@@ -4,82 +4,67 @@
 #include <unistd.h>
 #include "main.h"
 
-/**
- * make_buffer - function to create a buffer
- * @file: file input to write to
- * Return: return buffer on su ccess
- */
-char *make_buffer(char *file)
-{
-	char *buffer;
-	
-	buffer = malloc(sizeof(char) * 1024);
-	if (buffer == NULL)
-	{
-		free(buffer);
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file);
-		exit(99);
-	}
-	printf("Hello world");
-	return (buffer);
-}
+#define BUF_SIZE 1024
 
 /**
- * close_fd - function to close a file descriptor
- * @fd: file descriptor to close
+ * main - Entry point
+ * @argc: Argument count
+ * @argv: Argument vector
+ *
+ * Return: Always 0 (Success)
  */
-
-void close_fd(int fd)
+int main(int argc, char *argv[])
 {
-	int c;
+    int fd_from, fd_to, close_from, close_to;
+    ssize_t bytes_read, bytes_written;
+    char buffer[BUF_SIZE];
 
-	c = close(fd);
-	if (c == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
-		exit(100);
-	}
-}
-/**
- * main - main function
- * @ac: cmd count
- * @av: cmd vector
- * Return: 0 on success
- */
-int main(int ac, char *av[])
-{
-	int r, w, fd_r, fd_w;
-	char *buffer;
+    if (argc != 3)
+    {
+        dprintf(STDERR_FILENO, "Usage: %s file_from file_to\n", argv[0]);
+        exit(97);
+    }
 
-	if (ac != 3)
-	{
-		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
-		exit(97);
-	}
-	buffer = make_buffer(av[2]);
-	fd_r = open(av[1], O_RDONLY);
-	r = read(fd_r, buffer, 1024);
-	fd_w = open(av[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+    fd_from = open(argv[1], O_RDONLY);
+    if (fd_from == -1)
+    {
+        dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+        exit(98);
+    }
 
-	do {
-		if (fd_r == -1 || r == -1)
-		{
-			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", av[1]);
-			free(buffer);
-			exit(98);
-		}
-		w = write(fd_w, buffer, r);
-		if (fd_w == -1 || w == -1)
-		{
-			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", av[2]);
-			free(buffer);
-			exit(99);
-		}
-		r = read(fd_r, buffer, 1024);
-		fd_w = open(av[2], O_WRONLY | O_APPEND);
-	} while (r > 0);
-	free(buffer);
-	close_fd(fd_r);
-	close_fd(fd_w);
-	return (0);
+    fd_to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+    if (fd_to == -1)
+    {
+        dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+        exit(99);
+    }
+
+    while ((bytes_read = read(fd_from, buffer, BUF_SIZE)) > 0)
+    {
+        bytes_written = write(fd_to, buffer, bytes_read);
+        if (bytes_written == -1 || bytes_written != bytes_read)
+        {
+            dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+            exit(99);
+        }
+    }
+
+    if (bytes_read == -1)
+    {
+        dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+        exit(98);
+    }
+
+    close_from = close(fd_from);
+    close_to = close(fd_to);
+    if (close_from == -1 || close_to == -1)
+    {
+        if (close_from == -1)
+            dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_from);
+        if (close_to == -1)
+            dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_to);
+        exit(100);
+    }
+
+    return (0);
 }
